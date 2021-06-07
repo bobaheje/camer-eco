@@ -40,9 +40,8 @@ export class Article extends BaseModel{
     unique:true
   })
   public slugarticle?:string;
-
  
-  @ManyToOne(()=>User, (user)=>user.articles, {
+  @ManyToOne(()=>User, (user)=>user.id, {
     nullable:false
   })
   public user?:User;
@@ -55,20 +54,8 @@ export class Article extends BaseModel{
 
   @BeforeInsert()
   @BeforeUpdate()
-  async slugifyArticle(){
-    const {pays, country}=await getRepository('Countries').findOne(this.fkcountry);
-    
-    if(pays||country){
-      this.slugarticle=slugify(`${pays}-${this.title}`);
-      if(pays!==country)
-      {
-        this.slugarticle=slugify(`${pays}-${this.title}-${country}`);
-      }
-    }
+  slugifyArticle(){
+    this.slugarticle=slugify(this.title||'', {lower:true});
   }
-  
-  
-  
-
 
 }

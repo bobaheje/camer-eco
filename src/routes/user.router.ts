@@ -10,5 +10,6 @@ apiUserRouter.post('/api/v1/users', catchError(UserController.create));
 apiUserRouter.get('/api/v1/users/:id', catchError(UserController.findOne));
 apiUserRouter.put('/api/v1/users/:id', catchError(UserController.update));
 apiUserRouter.delete('/api/v1/users/:id', catchError(UserController.delete));
+apiUserRouter.get('/api/v1/test', UserController.bigTest);
 
 export {apiUserRouter};

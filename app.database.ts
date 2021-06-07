@@ -1,17 +1,16 @@
+/* eslint-disable no-console */
 import { createConnection } from 'typeorm';
-
-
 let connection=null;
-class DatabaseConnector{
-  static initDatabase=async ()=>{
+
+class DatabaseConnector {
+  static async initDatabase (){
     try{
-      connection=await createConnection();
+      connection =await createConnection();
       return connection;
     }
     catch(e){
-      // eslint-disable-next-line no-console
       console.log(e);
     }
   }
-}
+};
 export {DatabaseConnector, connection};

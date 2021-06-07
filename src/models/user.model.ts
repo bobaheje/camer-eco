@@ -57,14 +57,15 @@ class User extends BaseModel{
   @OneToMany(()=>Article, (article)=>article.user)
   public articles?:Article[];
   @BeforeInsert()
+  @BeforeUpdate()
   passwordEncryption(){
-    this.password=bcrypt.hashSync(this.password, 10);
+    this.password=bcrypt.hashSync(this.password ||'', 10);
     //console.log(this.password);
   }
   @BeforeInsert()
   @BeforeUpdate()
   capitalise(){
-    this.prenom=titleCase(this.password||'');
+    this.prenom=titleCase(this.prenom||'');
     this.nom=this.nom?.toUpperCase();
   }
 };

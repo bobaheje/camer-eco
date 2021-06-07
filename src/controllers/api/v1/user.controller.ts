@@ -7,7 +7,11 @@ import { User } from '../../../models/user.model';
 
 class UserController{
  
-
+  static bigTest= (req:Request, res:Response)=>{
+    // eslint-disable-next-line no-invalid-this
+    //const model =getRepository(User);
+     return res.json({'message':'Ceci est un test'});
+  }
   
   static findAll=async (req:Request, res:Response)=>{
     // eslint-disable-next-line no-invalid-this
