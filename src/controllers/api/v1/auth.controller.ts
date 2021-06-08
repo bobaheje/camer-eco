@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 import { User } from '../../../models/user.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -17,16 +17,15 @@ export class AuthController{
         
         if(!user) {return res.status(401).json({'message':'User not found'});}
         if(user){
-          const enteredPassword:string=user.password;
-          console.log(user);
-          const isAuthenticated=bcrypt.compareSync(password, enteredPassword );
-          console.log(`${enteredPassword} Après`);
+          
+          const isAuthenticated=bcrypt.compareSync(password, user.password );
+          
           if(! isAuthenticated) {return res.status(404).json({'message':'Bad Credentials'});}
           const generatedToken=jwt.sign({
             exp:Math.floor(Date.now()/1000)+(60*30),
             data:{'name':`${user.nom} ${user.prenom}`}
           }, process.env.JWT_SECRET||'');
-          console.log(generatedToken|| 'est OK');
+          
           return res.json(generatedToken);
         }
     }
@@ -47,5 +46,22 @@ export class AuthController{
     catch(e){
       next(e);
     }
+  }
+
+  static verifyUser=async (req:Request, res:Response, next:NextFunction)=>{
+    const model=getRepository(User);
+    const userToVerify=model.find({confirmationCode: req.params.confirmationCode});
+    if(!userToVerify) {return res.status(404).json({'message':'User not found'});};
+    if(userToVerify){
+      
+      return res.json(await getConnection()
+        .createQueryBuilder()
+        .update(User)
+        .set({ isActive: true, confirmationCode: null })
+        .where('confirmationCode = :confirmationCode', {confirmationCode: req.params.confirmationCode })
+        .execute());
+    
+    }
+    
   }
 }

@@ -4,6 +4,7 @@ import { BeforeInsert, BeforeUpdate, Column, Entity, Index, ManyToOne, OneToMany
 import { Article } from './article.model';
 import { BaseModel } from './base.model';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -41,6 +42,11 @@ class User extends BaseModel{
   })
   public password?:string;
 
+  @Column('text', {
+    nullable:true
+  })
+  public confirmationCode?:string;
+
   @Column('boolean', {
     default:false,
     nullable:false
@@ -60,7 +66,9 @@ class User extends BaseModel{
   
   passwordEncryption(){
     this.password=bcrypt.hashSync(this.password ||'', 10);
+    this.confirmationCode=jwt.sign({'email':this.email}, process.env.CONFIRM_SECRET||'');
     //console.log(this.password);
+    
   }
   @BeforeInsert()
   @BeforeUpdate()
