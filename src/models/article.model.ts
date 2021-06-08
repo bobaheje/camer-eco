@@ -2,6 +2,7 @@
 import slugify from 'slugify';
 import { BeforeInsert, BeforeUpdate, Column, Entity, getRepository, Index, ManyToOne } from 'typeorm';
 import { BaseModel } from './base.model';
+import { Category } from './category.model';
 import { Pays } from './country.model';
 import { User } from './user.model';
 
@@ -33,6 +34,17 @@ export class Article extends BaseModel{
     length:200,
     nullable:false
   })
+  photo?:string;
+
+  @Column('text', {
+    nullable:false
+  })
+  article?:string;
+
+  @Column('varchar', {
+    length:200,
+    nullable:false
+  })
   chapeau?:string;
 
   @Column('varchar', {
@@ -50,12 +62,17 @@ export class Article extends BaseModel{
     nullable:false
   })
   public countries?:Pays;
+
+  @ManyToOne(()=>Category, (category)=>category.id, {
+    nullable:false
+  })
+  public categories?:Category;
   
 
   @BeforeInsert()
   @BeforeUpdate()
   slugifyArticle(){
-    this.slugarticle=slugify(this.title||'', {lower:true});
+    this.slugarticle=slugify(this.title||'', {lower:true, replacement:'-'});
   }
 
 }

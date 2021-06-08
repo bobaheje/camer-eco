@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { User } from '../../../models/user.model';
+import { UserService } from '../../../services/service.user';
 
 
 
@@ -12,6 +13,7 @@ class UserController{
     //const model =getRepository(User);
      return res.json({'message':'Ceci est un test'});
   }
+  
   
   static findAll=async (req:Request, res:Response)=>{
     // eslint-disable-next-line no-invalid-this

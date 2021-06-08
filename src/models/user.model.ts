@@ -37,7 +37,7 @@ class User extends BaseModel{
   @Column('varchar', {
     nullable:false,
     length:250,
-    select:false
+    select:true
   })
   public password?:string;
 
@@ -57,7 +57,7 @@ class User extends BaseModel{
   @OneToMany(()=>Article, (article)=>article.user)
   public articles?:Article[];
   @BeforeInsert()
-  @BeforeUpdate()
+  
   passwordEncryption(){
     this.password=bcrypt.hashSync(this.password ||'', 10);
     //console.log(this.password);
