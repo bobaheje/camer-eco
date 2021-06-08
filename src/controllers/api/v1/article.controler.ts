@@ -13,20 +13,7 @@ export class ArticleController{
 
   static create=async (req:Request, res:Response)=>{
     const model=getRepository(Article);
-    let user=null;
-    let country=null;
-    const {userId, countriesIdpays}=req.body;
-    if(userId){
-      const userModel=getRepository(User);
-      user=await userModel.findOne(userId) ;
-      req.body.userId=user;
-    }
-    if(countriesIdpays){
-      const paysModel=getRepository(Pays);
-      country=await paysModel.findOne(countriesIdpays);
-      req.body.countriesIdpays=country;
-    }
-    
+      
     return res.json(await model.save(model.create(req.body)));
   }
   static findOne=async (req:Request, res:Response)=>{
