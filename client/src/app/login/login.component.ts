@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 
 @Component({
@@ -11,19 +12,18 @@ import { LoginService } from '../services/login.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private loginService:LoginService) { }
+  constructor(private loginService:LoginService,private router:Router) { }
   
   onSubmit=(credentials:NgForm)=>{
-    this.loginService.login(credentials)
-        .subscribe(result=>{
-          if(result)
-          {
-            console.log('OK');
-          }
-          else{
-            console.log('NOT OK');
-          }
-        });
+    const isLogged =this.loginService.login(credentials);
+    if(isLogged){
+      this.router.navigate(['/dashboard']);
+    }
+    else{
+      this.router.navigate(['/login']);;
+    }
+    
+      
   }
 
   ngOnInit(): void {

@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 })
 export class LoginService {
   currentUser:string | undefined;
-  url='http://localhost:3000/api/v1/login';
+  url='http://localhost:1500/api/v1/login';
   constructor(private http:HttpClient) { 
     const token=localStorage.getItem('token');
     if(token && token!=='undefined'){
@@ -31,12 +31,17 @@ export class LoginService {
     return this.http.post(this.url, JSON.stringify(credentials), {headers})
                     .pipe(map( response =>{
                       if(response){
-                        localStorage.setItem('token', JSON.stringify(response));
-                        console.log(`le token ${JSON.stringify(response)}`);
+                        const Token:string=JSON.stringify(response);
+                        localStorage.setItem('token', Token);
+                        console.log(Token);
                         return true;
                       }
                       return false;
                       
                     }));
+  }
+
+  getUser=()=>{
+    return this.currentUser;
   }
 }

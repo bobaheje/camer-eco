@@ -6,7 +6,7 @@ import { catchError } from '../middleware/error';
 
 const apiCategoryRouter=Router();
 
-apiCategoryRouter.get('/api/v1/categories', AuthController.authorize, catchError(CategoryController.findAll));
+apiCategoryRouter.get('/api/v1/categories', catchError(CategoryController.findAll));
 apiCategoryRouter.post('/api/v1/categories', AuthController.authorize, catchError(CategoryController.create));
 apiCategoryRouter.get('/api/v1/categories/:id', AuthController.authorize, catchError(CategoryController.findOne));
 apiCategoryRouter.get('/api/v1/categories/:slugcategory', AuthController.authorize, catchError(CategoryController.findBySlug));

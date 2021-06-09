@@ -8,12 +8,18 @@ import { LoginComponent } from './login/login.component';
 import { LoginService } from './services/login.service';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ArticleComponent } from './article/article.component';
+import { CategoryComponent } from './category/category.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    ArticleComponent,
+    CategoryComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

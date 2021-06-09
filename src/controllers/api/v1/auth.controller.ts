@@ -21,10 +21,10 @@ export class AuthController{
           const isAuthenticated=bcrypt.compareSync(password, user.password );
           
           if(! isAuthenticated) {return res.status(404).json({'message':'Bad Credentials'});}
-          const generatedToken=jwt.sign({
+          const generatedToken=`${jwt.sign({
             exp:Math.floor(Date.now()/1000)+(60*30),
             data:{'name':`${user.nom} ${user.prenom}`}
-          }, process.env.JWT_SECRET||'');
+          }, process.env.JWT_SECRET||'1')}`;
           
           return res.json(generatedToken);
         }
@@ -35,15 +35,19 @@ export class AuthController{
     
   }
 
-  static authorize=async (req:Request, res:Response, next:NextFunction)=>{
-    const Token=req.headers.authorization?.split(' ')[1];
+  static authorize= (req:Request, res:Response, next:NextFunction)=>{
+    //const Token=req.headers.authorization?.split(' ')[1];
+    const Token=req.headers.authorization;
+    
     try{
       
-      const {data} =await jwt.verify(Token||'', process.env.JWT_SECRET||'1');
+      jwt.verify(Token, process.env.JWT_SECRET);
+      console.log('after');
       next();
 
     }
     catch(e){
+      console.log(e);
       next(e);
     }
   }
