@@ -1,0 +1,46 @@
+
+<div class="w-auto">
+  <div class="mt-11 bg-gray-200 p-3 shadow-md rounded relative">
+    <span class="px-6">Add Category</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute top-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+    </svg>
+</div>
+  <form 
+      class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      #frmadd="ngForm" (ngSubmit)="onSubmit(frmadd.value)"
+      >
+      
+      <div class="mb-4">
+        <label class="block text-gray-500 text-sm font-bold mb-2" for="username">
+          Category
+        </label>
+        <input 
+          class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+          id="category" 
+          name="category"
+          type="text" 
+          placeholder="Category"
+          required
+          ngModel
+          #frmCategory="ngModel"  
+          #watchStatus
+          >
+          <small [hidden]="frmCategory.valid || frmCategory.pristine" class="p-2 text-red-500">* Category is required</small>
+      </div>
+    
+      <div class="flex items-center justify-between">
+        <button 
+          [disabled]="!frmadd.valid"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+          type="submit"
+          >
+          Add 
+        </button>
+      
+      </div>
+  </form>
+  <!-- <p class="text-center text-gray-500 text-xs">
+    &copy;2020 Acme Corp. All rights reserved.
+  </p> -->
+</div>

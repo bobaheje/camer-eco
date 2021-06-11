@@ -47,6 +47,12 @@ export class Article extends BaseModel{
   })
   chapeau?:string;
 
+  @Column({
+    nullable:false,
+    default:0
+  })
+  hit?:number;
+
   @Column('varchar', {
     length:200,
     unique:true

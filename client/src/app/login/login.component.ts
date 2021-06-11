@@ -3,6 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginService } from '../services/login.service';
 
 @Component({
@@ -12,15 +13,19 @@ import { LoginService } from '../services/login.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private loginService:LoginService,private router:Router) { }
+  constructor(private loginService:LoginService, private router:Router) { }
   
   onSubmit=(credentials:NgForm)=>{
-    const isLogged =this.loginService.login(credentials);
-    if(isLogged){
-      this.router.navigate(['/dashboard']);
+    this.loginService.login(credentials);
+    const Token=localStorage.getItem('token');
+    const isNotLogged = new JwtHelperService().isTokenExpired(Token||'');
+    if(isNotLogged){
+      localStorage.removeItem('token');
+      this.router.navigate(['/login']);
     }
     else{
-      this.router.navigate(['/login']);;
+      
+      this.router.navigate(['/dashboard']);
     }
     
       

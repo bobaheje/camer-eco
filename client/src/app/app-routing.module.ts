@@ -6,6 +6,12 @@ import { LoginComponent } from './login/login.component';
 import { ArticleComponent } from './article/article.component';
 import { CategoryComponent } from './category/category.component';
 import { UserComponent } from './user/user.component';
+import { CategoryDetailComponent } from './category/category-detail/category-detail.component';
+import { CategoryAddEditComponent } from './category/category-add-edit/category-add-edit.component';
+import { UserAddEditComponent } from './user/user-add-edit/user-add-edit.component';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import { AuthGardService } from './services/auth-gard.service';
+import { DeleteCategoryComponent } from './category/delete-category/delete-category.component';
 
 const routes:Routes=[
   {
@@ -15,18 +21,55 @@ const routes:Routes=[
   {
     path:'dashboard',
     component:DashboardComponent,
-    children:[
+    canActivate:[AuthGardService],
+    children:
+    [
       {
         path:'article',
-        component:ArticleComponent
+        component:ArticleComponent,
+        canActivate:[AuthGardService]
       },
       {
         path:'category',
-        component:CategoryComponent
+        component:CategoryComponent,
+        canActivate:[AuthGardService],
+        children:
+        [
+          {
+            path :'deletecategory/:id',
+            component:DeleteCategoryComponent,
+            canActivate:[AuthGardService]
+          },
+          {
+            path :'editcategory/:id',
+            component:CategoryDetailComponent,
+            canActivate:[AuthGardService]
+          },
+          {
+            path :'addcategory',
+            component:CategoryAddEditComponent,
+            canActivate:[AuthGardService]
+          }
+        
+        ]
       },
       {
         path:'user',
-        component:UserComponent
+        component:UserComponent,
+        canActivate:[AuthGardService],
+          children:
+          [
+            {
+              path :'edituser',
+              component:UserDetailComponent,
+              canActivate:[AuthGardService]
+            },
+            {
+              path :'adduser',
+              component:UserAddEditComponent,
+              canActivate:[AuthGardService]
+            }
+          ]
       }
     ]
   },
@@ -43,6 +86,7 @@ const routes:Routes=[
   imports: [
     CommonModule,
     RouterModule.forRoot(routes)
+    
   ],
   exports:[RouterModule]
 })

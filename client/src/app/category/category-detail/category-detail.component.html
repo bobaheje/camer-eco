@@ -1,0 +1,48 @@
+<div class="w-auto">
+  <div class="mt-11 bg-gray-200 p-3 shadow-md rounded relative">
+    <span class="px-6">Edit Category</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute top-3" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+      <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+    </svg>
+</div>
+  <form 
+      class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      #frmupdate="ngForm" (ngSubmit)="onSubmit(frmupdate.value)"
+      >
+      
+      <div class="mb-4">
+        <label class="block text-gray-500 text-sm font-bold mb-2" for="username">
+          Category
+        </label>
+        <input 
+          class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+          id="category" 
+          name="category"
+          type="text" 
+          placeholder="Category"
+          required
+          [ngModel]="categoryDetail.category"
+          #frmCategory="ngModel"
+          #watchState
+          >
+          <small [hidden]="frmCategory.valid || frmCategory.pristine" class="p-2 text-red-500">* Category</small>
+      </div>
+      <input name="id" type="hidden" [ngModel]="categoryDetail.id">
+          
+      
+      <div class="flex items-center justify-between">
+        <button 
+          [disabled]="!frmupdate.valid"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+          type="submit"
+          >
+          Update 
+        </button>
+      
+      </div>
+  </form>
+  <!-- <p class="text-center text-gray-500 text-xs">
+    &copy;2020 Acme Corp. All rights reserved.
+  </p> -->
+</div>

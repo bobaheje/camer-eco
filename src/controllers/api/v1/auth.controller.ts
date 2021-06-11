@@ -11,6 +11,7 @@ export class AuthController{
   static login=async (req:Request, res:Response, next:NextFunction)=>{
     const model=getRepository(User);
     const {email, password}=req.body;
+    
     try {
         
         const user=await model.findOne({email});
@@ -37,12 +38,13 @@ export class AuthController{
 
   static authorize= (req:Request, res:Response, next:NextFunction)=>{
     //const Token=req.headers.authorization?.split(' ')[1];
-    const Token=req.headers.authorization;
+    const Token=JSON.parse(req.headers.authorization||'');
     
+    //console.log(Token);
     try{
       
-      jwt.verify(Token, process.env.JWT_SECRET);
-      console.log('after');
+      jwt.verify(Token, process.env.JWT_SECRET||'1');
+      
       next();
 
     }

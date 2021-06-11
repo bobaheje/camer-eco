@@ -7,12 +7,16 @@ export class CategoryController{
 
   static findAll=async (req:Request, res:Response)=>{
     const model=getRepository(Category);
-    return res.json(await model.find());
+    return res.json(await model.find({
+      order:{
+        category:'ASC',
+        createdAt:'DESC'
+      }
+    }));
   }
 
   static create=async (req:Request, res:Response)=>{
     const model=getRepository(Category);
-      
     return res.json(await model.save(model.create(req.body)));
   }
   static findOne=async (req:Request, res:Response)=>{

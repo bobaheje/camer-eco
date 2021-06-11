@@ -11,6 +11,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ArticleComponent } from './article/article.component';
 import { CategoryComponent } from './category/category.component';
 import { UserComponent } from './user/user.component';
+import { CategoryDetailComponent } from './category/category-detail/category-detail.component';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import { UserAddEditComponent } from './user/user-add-edit/user-add-edit.component';
+import { CategoryAddEditComponent } from './category/category-add-edit/category-add-edit.component';
+import { DeleteCategoryComponent } from './category/delete-category/delete-category.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +24,12 @@ import { UserComponent } from './user/user.component';
     DashboardComponent,
     ArticleComponent,
     CategoryComponent,
-    UserComponent
+    UserComponent,
+    CategoryDetailComponent,
+    UserDetailComponent,
+    UserAddEditComponent,
+    CategoryAddEditComponent,
+    DeleteCategoryComponent
   ],
   imports: [
     BrowserModule,
