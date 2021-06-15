@@ -22,9 +22,9 @@ export class AuthController{
           const isAuthenticated=bcrypt.compareSync(password, user.password );
           
           if(! isAuthenticated) {return res.status(404).json({'message':'Bad Credentials'});}
-          const generatedToken=`${jwt.sign({
+          const generatedToken=`Bearer ${jwt.sign({
             exp:Math.floor(Date.now()/1000)+(60*30),
-            data:{'name':`${user.nom} ${user.prenom}`}
+            data:{'id':user.id, 'role': user.role, 'username':`${user.nom} ${user.prenom}`}
           }, process.env.JWT_SECRET||'1')}`;
           
           return res.json(generatedToken);
@@ -37,10 +37,17 @@ export class AuthController{
   }
 
   static authorize= (req:Request, res:Response, next:NextFunction)=>{
-    //const Token=req.headers.authorization?.split(' ')[1];
-    const Token=JSON.parse(req.headers.authorization||'');
+    let Token=JSON.parse(req.headers.authorization||'');
     
-    //console.log(Token);
+    if(Token.startsWith('Bearer'))
+    {
+      Token=Token.split(' ')[1];
+    }
+    // else{
+    //   Token=req.headers.authorization;
+      
+    // }
+    
     try{
       
       jwt.verify(Token, process.env.JWT_SECRET||'1');
@@ -58,7 +65,7 @@ export class AuthController{
     const model=getRepository(User);
     const userToVerify=model.find({confirmationCode: req.params.confirmationCode});
     if(!userToVerify) {return res.status(404).json({'message':'User not found'});};
-    if(userToVerify){
+    if(await userToVerify){
       
       return res.json(await getConnection()
         .createQueryBuilder()

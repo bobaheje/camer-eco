@@ -12,7 +12,7 @@
       >
       
       <div class="mb-4">
-        <label class="block text-gray-500 text-sm font-bold mb-2" for="username">
+        <label class="block text-gray-500 text-sm font-bold mb-2" for="category">
           Category
         </label>
         <input 
@@ -23,13 +23,11 @@
           placeholder="Category"
           required
           [ngModel]="categoryDetail.category"
-          #frmCategory="ngModel"
-          #watchState
-          >
+          #frmCategory="ngModel"                    >
           <small [hidden]="frmCategory.valid || frmCategory.pristine" class="p-2 text-red-500">* Category</small>
       </div>
       <input name="id" type="hidden" [ngModel]="categoryDetail.id">
-          
+       
       
       <div class="flex items-center justify-between">
         <button 

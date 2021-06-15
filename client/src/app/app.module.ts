@@ -16,6 +16,30 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserAddEditComponent } from './user/user-add-edit/user-add-edit.component';
 import { CategoryAddEditComponent } from './category/category-add-edit/category-add-edit.component';
 import { DeleteCategoryComponent } from './category/delete-category/delete-category.component';
+import { AddArticleComponent } from './article/add-article/add-article.component';
+import { CategoryService } from './services/category.service';
+import { ArticleService } from './services/article.service';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import 'froala-editor/js/froala_editor.pkgd.min.js';
+import { AuthService } from './services/auth.service';
+import {NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule} from '@angular-material-components/datetime-picker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatInputModule } from '@angular/material/input';
+import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+
+export const MY_FORMATS = {
+  parse: {
+      dateInput: 'LL'
+  },
+  display: {
+      dateInput: 'YYYY-MM-DD HH:mm:ss',
+      monthYearLabel: 'YYYY',
+      dateA11yLabel: 'LL',
+      monthYearA11yLabel: 'YYYY'
+  }
+};
 
 @NgModule({
   declarations: [
@@ -29,16 +53,32 @@ import { DeleteCategoryComponent } from './category/delete-category/delete-categ
     UserDetailComponent,
     UserAddEditComponent,
     CategoryAddEditComponent,
-    DeleteCategoryComponent
+    DeleteCategoryComponent,
+    AddArticleComponent
   ],
   imports: [
+    MatInputModule, 
+    MatDatepickerModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
+    NgxMatTimepickerModule,
+    MatMomentDateModule,
+    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FroalaEditorModule.forRoot(), 
+    FroalaViewModule.forRoot()
+    
   ],
   providers: [
-    LoginService
+    LoginService,
+    CategoryService,
+    ArticleService,
+    AuthService,
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' }
   ],
   bootstrap: [AppComponent]
 })

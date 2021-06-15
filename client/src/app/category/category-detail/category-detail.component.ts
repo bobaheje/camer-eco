@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'src/app/models/category';
+import { AuthService } from 'src/app/services/auth.service';
 import { LoginService } from 'src/app/services/login.service';
 import { CategoryComponent } from '../category.component';
 
@@ -14,14 +15,17 @@ import { CategoryComponent } from '../category.component';
 })
 export class CategoryDetailComponent implements OnInit {
   @Input() categoryDetail:Category | any;
-  constructor(private authService:LoginService, 
+  constructor(private authService:AuthService, 
     private router:Router, 
     private catService:CategoryComponent,
     private route:ActivatedRoute,
     private location:Location
     ){
 
-    if(!authService.isLoggedIn){ router.navigate(['/login']);};
+    if(!this.authService.isLoggedIn){ 
+      this.authService.logOut();
+      router.navigate(['/login']);
+    }
   }
 
   onSubmit=(formCat:Category)=>{

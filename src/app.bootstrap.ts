@@ -4,6 +4,7 @@ import { ErrorMiddleware } from './middleware/error';
 import { apiArticleRouter } from './routes/article.router';
 import { apiAuthRouter } from './routes/auth.router';
 import { apiCategoryRouter } from './routes/category.router';
+import { apiPaysRouter } from './routes/pays.router';
 import { apiUserRouter } from './routes/user.router';
 
 
@@ -18,6 +19,7 @@ app.use(apiAuthRouter);
 app.use(apiUserRouter);
 app.use(apiArticleRouter);
 app.use(apiCategoryRouter);
+app.use(apiPaysRouter);
 //not found
 app.use(ErrorMiddleware.appError);
 app.use(ErrorMiddleware.notFound);

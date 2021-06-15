@@ -12,8 +12,9 @@ export class ArticleController{
   }
 
   static create=async (req:Request, res:Response)=>{
+    
     const model=getRepository(Article);
-      
+     
     return res.json(await model.save(model.create(req.body)));
   }
   static findOne=async (req:Request, res:Response)=>{

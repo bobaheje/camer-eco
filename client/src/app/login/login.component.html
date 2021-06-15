@@ -18,11 +18,11 @@
                     name="email"
                     #frmEmail="ngModel"   
                     ngModel
-                    #watchState
+                    
                     class="border-0 p-4 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full" 
                     placeholder="Email" 
                     style="transition: all 0.15s ease 0s;" />
-                    <small [hidden]="frmEmail.valid || frmEmail.pristine " class="p-2 text-red-500">* Email is required</small>
+                    <small *ngIf="!frmEmail.valid && frmEmail.touched " class="p-2 text-red-500">* Email is required</small>
                   
               </div>
               <div class="relative w-full mb-3">
@@ -32,11 +32,11 @@
                   name="password" 
                   #frmPassword="ngModel"  
                   ngModel
-                  #watchState
+                  
                   class="border-0 p-4 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full" 
                   placeholder="Password" 
                   style="transition: all 0.15s ease 0s;" />
-                  <small [hidden]="frmPassword.valid || frmPassword.pristine " class="p-2 text-red-500">* Password is required</small>
+                  <small *ngIf="! frmPassword.valid && frmPassword.touched " class="p-2 text-red-500">* Password is required</small>
                                     
               </div>
               <div class="text-center mt-6">
@@ -46,9 +46,12 @@
                     class="p-3 rounded-lg bg-purple-600 outline-none text-white shadow w-32 justify-center focus:bg-purple-700 hover:bg-purple-500" >
                     Connexion
                   </button > 
-              
+                  
               </div>  
-              
+              <div class="relative w-full mb-3">
+                <small [hidden]="frmLogin.valid || frmLogin.pristine" class="p-2 text-red-500">* Enter valid credentials</small>
+                
+            </div>
           </form>
       </div>
   </div>

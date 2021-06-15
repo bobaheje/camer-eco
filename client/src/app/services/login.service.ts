@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-invalid-this */
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import { NgForm } from '@angular/forms';
 import { map } from 'rxjs/operators';
+import { User } from '../models/user';
+import { UserService } from './user.service';
+import { AuthService } from './auth.service';
 
 
 
@@ -18,18 +21,18 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class LoginService {
-  currentUser:string | undefined;
+  @Input() currentUser: | any;
+  @Input() username:string|any;
+  @Input() userrole:string|any;
   url='http://localhost:1500/api/v1/login';
-  constructor(private http:HttpClient) { 
-    const token=localStorage.getItem('token');
-    if(token && token!=='undefined'){
-      const jwt=new JwtHelperService();
-      this.currentUser=jwt.decodeToken(token);
-    
-    }
-    
-  }
-
+  constructor(
+    private http:HttpClient, 
+    private userService:UserService,
+    private authService:AuthService
+    ) { }
+      
+      // this.currentUser=jwt.decodeToken(token);
+  
   login=(credentials:NgForm)=>{
     const isLogged=false;
     let data;
@@ -40,6 +43,18 @@ export class LoginService {
     return this.http.post(this.url, JSON.stringify(credentials), {headers})
                     .subscribe(res=>{
                       localStorage.setItem('token', JSON.stringify(res));
+                      const jwt=new JwtHelperService();
+                      let token=localStorage.getItem('token')||'';
+                      token=token?.split(' ')[1];
+                      const returnToken=jwt.decodeToken(token);
+                      const {data}=returnToken;
+                      this.userService.getUserById(parseInt(data.id))
+                                  .pipe(map(result=>{
+                                    const user=result;
+                                    localStorage.setItem('username', JSON.stringify(`${user.nom} ${user.prenom}`));
+                                    localStorage.setItem('role', JSON.stringify(`${user.role}`));
+                                  }));
+                                  
                       
                       
                     });
@@ -47,21 +62,25 @@ export class LoginService {
                    
   }
   logOut=()=>{
-    localStorage.removeItem('token');
+    this.authService.logOut();
   }
   getUser=()=>{
-    return this.currentUser;
+    
+    return this.authService.getCurrentUser();
   }
+
+  getRole=()=>{
+    return this.authService.getCurrentUserRole();
+
+  }
+
+ 
   isLoggedIn=()=>{
-    const token=localStorage.getItem('token');
-    const isExpired= new JwtHelperService().isTokenExpired(token||'');
-    if(isExpired) {
-      localStorage.removeItem(token||'');
-      return false;
-    }
-    return true;
+    return this.authService.isLoggedIn;
     
   }
 }
+
+
 
 

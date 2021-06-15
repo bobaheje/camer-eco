@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category } from 'src/app/models/category';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { CategoryComponent } from '../category.component';
 
 @Component({
@@ -11,8 +11,11 @@ import { CategoryComponent } from '../category.component';
 })
 export class CategoryAddEditComponent implements OnInit {
   @Input() categoryDetail:Category | any;
-  constructor(private authService:LoginService, private router:Router, private catService:CategoryComponent){
-    if(!authService.isLoggedIn){ router.navigate(['/login']);};
+  constructor(private authService:AuthService, private router:Router, private catService:CategoryComponent){
+    if(!authService.isLoggedIn){ 
+      authService.logOut();
+      router.navigate(['/login']);
+    };
   }
 
   onSubmit=(formCat:Category)=>{

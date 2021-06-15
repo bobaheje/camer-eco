@@ -3,9 +3,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Category } from '../models/category';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,20 @@ import { Category } from '../models/category';
 export class CategoryService {
   baseUrl='http://localhost:1500/api/v1/categories';
   headers:HttpHeaders;
-  constructor(private http:HttpClient) { 
+  constructor(
+      private http:HttpClient,
+      private authService:AuthService,
+      private router:Router
+       ) 
+  { 
+
+    if(! this.authService.isLogIn()) {
+      this.authService.logOut();
+      this.router.navigate(['/login']);
+
+    } 
+
+
     const Token=localStorage.getItem('token');
    
     this.headers=new HttpHeaders()
