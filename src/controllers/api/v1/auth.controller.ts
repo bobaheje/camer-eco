@@ -21,7 +21,10 @@ export class AuthController{
           
           const isAuthenticated=bcrypt.compareSync(password, user.password );
           
-          if(! isAuthenticated) {return res.status(404).json({'message':'Bad Credentials'});}
+          if(! isAuthenticated) {
+            
+            return res.status(404).json({'message':'Bad Credentials'});
+          }
           const generatedToken=`Bearer ${jwt.sign({
             exp:Math.floor(Date.now()/1000)+(60*30),
             data:{'id':user.id, 'role': user.role, 'username':`${user.nom} ${user.prenom}`}
@@ -47,7 +50,7 @@ export class AuthController{
     //   Token=req.headers.authorization;
       
     // }
-    
+    console.log(`Token Readed ${Token}`);
     try{
       
       jwt.verify(Token, process.env.JWT_SECRET||'1');

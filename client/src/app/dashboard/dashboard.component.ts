@@ -27,13 +27,15 @@ export class DashboardComponent implements OnInit {
     
     ) { 
     if(!authService.isLoggedIn){ 
+      
       this.authService.logOut();
       router.navigate(['/login']);
     };
+    console.log(this.authService.getCurrentUser());
      this.currentuser=this.authService.getCurrentUser();
      this.currentuserRole=authService.getCurrentUserRole();
      this.currentUserId=authService.getUserId();
-    
+     
   }
 
   getUser=()=>{

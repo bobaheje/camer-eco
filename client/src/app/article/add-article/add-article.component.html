@@ -1,153 +1,189 @@
 
-<div class="w-auto">
-  <div class="mt-11 bg-gray-200 p-3 shadow-md rounded relative">
-    <span class="px-6">Add Article</span>
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute top-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-    </svg>
-</div>
+
+  
   <form 
-      class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      class="px-8 pt-6 pb-8 mb-4 w-full"
       #frmadd="ngForm" (ngSubmit)="addArticle(frmadd.value)"
       >
-      <div class="mb-4">
+      <div class="">
+        <div class="mt-11 bg-blue-500 p-3 shadow-md rounded relative">
+          <span class="px-6 text-white">Add Article</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute top-3  text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+        </div>
+      </div>
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+    <div class="-mx-3 md:flex mb-6">
+      <div class="md:w-1/3 px-3 mb-6 md:mb-0">
+        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
+          Date de Publication
+        </label>
         <mat-form-field>
-          <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date & time" ngModel="publicationDate" name="publicationDate">
+          <input matInput [ngxMatDatetimePicker]="picker" placeholder="Votre choix" ngModel="publicationDate" name="publicationDate">
           <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
         </mat-form-field>
+        <p class="text-red text-xs italic">Please fill out this field.</p>
       </div>
-      <div class="mb-4">
-        <label class="block text-gray-500 text-sm font-bold mb-2" for="auteur">
+      <div class="md:w-1/3 px-3">
+        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-auteur">
           Auteur
         </label>
         <input 
-          class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-          id="auteur" 
-          name="auteur"
+          class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" 
+          id="grid-auteur" 
           type="text" 
           placeholder="Auteur"
-        
+          #auteur
           ngModel
-          #frmAuteur="ngModel"  
-          
+          name="auteur"
           >
-          <small [hidden]="frmAuteur.valid || frmAuteur.pristine" class="p-2 text-red-500">* Category is required</small>
       </div>
-      
-      <div class="mb-4">
-        <label class="block text-gray-500 text-sm font-bold mb-2" for="source">
+      <div class="md:w-1/3 px-3">
+        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-source">
           Source
         </label>
         <input 
-          class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-          id="source" 
-          name="source"
+          class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" 
+          id="grid-source" 
           type="text" 
           placeholder="Source"
-          
+          #source
           ngModel
-          #frmSource="ngModel"  
-          
+          name="source"
           >
-          <small [hidden]="frmSource.valid || frmSource.pristine" class="p-2 text-red-500">* Category is required</small>
       </div>
 
-      <div class="mb-4">
-        <label class="block text-gray-500 text-sm font-bold mb-2" for="title">
-          Category
-        </label>
-        <select name="categoriesId" ngModel   class="block w-full bg-blue-500 text-white border border-grey-800 rounded-lg h-10 px-4 md:w-1/4 " >
-          <option [ngValue]="null" >--Your choice--</option>
-          <option  *ngFor="let category of categories;" [ngValue]="category.id">{{category.category}}</option>
-        </select>
-      </div>    
-      <div class="mb-4">
-        <label class="block text-gray-500 text-sm font-bold mb-2" for="countriesIdpays">
-          Country
-        </label>
-        <select name="countriesIdpays" ngModel  class="block w-full bg-blue-500 text-white border border-gry-800 rounded-lg h-10 px-4 md:w-1/2 " >
-          <option [ngValue]="null" >--Your choice--</option>
-          <option  *ngFor="let country of countries;"  [ngValue]="country.idpays">{{country.pays}}</option>
-        </select>
-      </div>    
-      <div class="mb-4">
-        <label class="block text-gray-500 text-sm font-bold mb-2" for="title">
-          Title
-        </label>
-        <input 
-          class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-          id="title" 
-          name="title"
-          type="text" 
-          placeholder="Title"
-          
-          ngModel
-          #frmTitle="ngModel"  
-          size="100"
-
-          >
-          <small [hidden]="frmTitle.valid || frmTitle.pristine" class="p-2 text-red-500">* Category is required</small>
-      </div>
-
-      <div class="grid grid-cols-1 space-y-2 mb-4">
-        <label class="text-sm font-bold text-gray-700 tracking-wide">Image</label>
-        <div class="flex items-center justify-center w-full">
-          <label class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
-              <div class="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-blue-400 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                  </svg>
-                  <p class="pointer-none text-gray-500 ">
-                    <span class="text-sm">Drag and drop</span> files here <br /> from your computer</p>
-              </div>
-              <input 
-                type="file" 
-                name="photo" 
-                class="hidden"
-                
-                ngModel
-                #frmPhoto="ngModel" 
-                
-              >
-              <!-- <small [hidden]="frmPhoto.valid || frmPhoto.pristine" class="p-2 text-red-500">* Category is required</small> -->
+    </div>
+      <div class="-mx-3 md:flex mb-2">
+        <div class="md:w-1/2 px-3 mb-6 md:mb-0 relative">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-city">
+            Pays
           </label>
+          <div class="relative">
+            <select name="countriesIdpays" ngModel  class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded" 
+            id="grid-country" >
+              <option ngValue="null" >--Your choice--</option>
+              <option  *ngFor="let country of countries;"   [value]="country.idpays">{{country.pays}}</option>
+            </select>
+            <div class="pointer-events-none absolute top-0 right-0 h-10 w-10 flex items-center px-2 text-blue-darker">
+              <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-city">
+            Catégorie
+          </label>
+          <div class="relative">
+            <select name="categoriesId" ngModel   class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded" 
+              id="grid-category" >
+              <option [ngValue]="null" >--Your choice--</option>
+              <option  *ngFor="let category of categories;" [value]="category.id">{{category.category | uppercase}}</option>
+            </select>
+            <div class="pointer-events-none absolute top-0 right-0 h-10 w-10 flex items-center px-2 text-blue-darker">
+              <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="mb-4">
-        <label class="block text-gray-500 text-sm font-bold mb-2" for="article">
-          Article
-        </label>
-        <textarea  cols="90" rows="15"
-          class="fr-view shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-          id="article" 
-          name="article"
-          placeholder="Article"
-          ngModel="html"
-          [froalaEditor]
-        >
-          </textarea>
-          
-          <!-- <small [hidden]="frmArticle.valid || frmArticle.pristine" class="p-2 text-red-500">* Article is required</small> -->
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-title">
+            Titre
+          </label>
+          <input 
+            class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" 
+            id="grid-title" 
+            type="text" 
+            placeholder="Titre"
+            #articleTitle="ngModel"
+            ngModel
+            name="title"
+            >
+          <p class="text-grey-dark text-xs italic">Make it as long and as crazy as you'd like</p>
+        </div>
       </div>
-     
-      <div class="flex items-center justify-between">
-        <input
-          type="hidden"
-          ngModel
-          #frmID="ngModel"
-          name="userId"
-          [ngModel]="currentUserId"
-        >
-        <button 
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-article">
+            Article
+          </label>
           
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-          type="submit"
+          <editor
+            ngModel
+            placeholder="Article"
+            name="article" 
+            #content
+
+            [init]="{
+              height: 500,
+              menubar: true,
+              plugins: [
+              'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+              'searchreplace template visualblocks textpattern visualchars code fullscreen',
+              'emoticons insertdatetime media table paste code help wordcount directionality'
+              ],
+              toolbar:
+                'undo redo | formatselect | bold italic backcolor | \
+                alignleft aligncenter alignright alignjustify | \
+                blockquote link image media | \
+                bullist numlist outdent indent | removeformat | help'
+              
+            }"
+
+          ></editor>
+        </div>
+      </div>
+      <div class="-mx-3 md:flex mb-2">
+        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-city">
+            Photo
+          </label>
+          <div class="flex items-center justify-center w-full">
+            <label class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
+                <div class="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-blue-400 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <p class="pointer-none text-gray-500 ">
+                      <span class="text-sm">Drag and drop</span> files here <br /> from your computer</p>
+                </div>
+                <input 
+                  type="file" 
+                  name="photo" 
+                  class="hidden"
+                  
+                  ngModel
+                  #frmPhoto="ngModel" 
+                  
+                >
+                <!-- <small [hidden]="frmPhoto.valid || frmPhoto.pristine" class="p-2 text-red-500">* Category is required</small> -->
+            </label>
+          </div>
+          
+        </div>
+        
+      </div>
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <input
+            type="hidden"
+            ngModel="{{currentUserId}}"
+            #userId
+            name="userId"
+          >
+          <button 
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+            type="submit"
           >
           Add 
         </button>
-      
+          <p class="text-grey-dark text-xs italic">Make it as long and as crazy as you'd like</p>
+        </div>
       </div>
+    </div>
   </form>
- 
-</div>
+
+

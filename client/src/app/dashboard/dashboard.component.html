@@ -1,7 +1,7 @@
 <!-- component -->
 <main class="bg-gray-100 dark:bg-gray-800 rounded-2xl relative h-screen overflow-hidden relative">
-  <div class="flex items-start justify-between">
-      <div class="h-screen hidden lg:block my-4 ml-4 shadow-lg relative w-80">
+    <div class="flex items-start justify-between">
+        <div class="h-screen hidden lg:block my-4 ml-4 shadow-lg relative w-80">
           <div class="bg-white h-full rounded-2xl dark:bg-gray-700">
               <div class="flex items-center justify-center pt-6">
                   <svg width="35" height="30" viewBox="0 0 256 366" version="1.1" preserveAspectRatio="xMidYMid">
@@ -82,8 +82,8 @@
                   </div>
               </nav>
           </div>
-      </div>
-      <div class="flex flex-col w-full pl-0 md:p-4 md:space-y-4">
+        </div>
+        <div class="flex flex-col w-full pl-0 md:p-4 md:space-y-4">
           <header class="w-full shadow-lg bg-white dark:bg-gray-700 items-center h-16 rounded-2xl z-40">
               <div class="relative z-20 flex flex-col justify-center h-full px-3 mx-auto flex-center">
                   <div class="relative items-center pl-1 flex w-full lg:max-w-68 sm:pr-2 sm:ml-0">
@@ -121,24 +121,27 @@
                           </div>
                       </div>
                   </div>
-              </header>
+            </header>
               <div class="overflow-auto h-screen pb-24 pt-2 pr-2 pl-2 md:pt-0 md:pr-0 md:pl-0">
                   <div class="flex flex-col flex-wrap sm:flex-row ">
-                      <div class="w-full sm:w-1/2">
-                          <div class="mb-4">
+                      <div class="w-full">
+                           
+                          <!-- <div class="mb-4"> -->
                               
-                                <div class="flex items-center justify-between mb-6">
-                                    <div class="flex items-center">
-                                        <router-outlet></router-outlet>    
-                                    </div>
+                                <div class="flex items-centermb-6">
+                                    <div class="flex items-center  justify-between "> 
+
+                                        <router-outlet></router-outlet> 
+                                          
+                                    </div> 
                                 </div>
-                          </div>
+                          <!-- </div> -->
                           
                       </div>
                       
                   </div>
               </div>
-          </div>
-      </div>
-  </main>
+        </div>
+    </div>
+</main>
 

@@ -29,7 +29,7 @@ export class CategoryService {
     } 
 
 
-    const Token=localStorage.getItem('token');
+    const Token=this.authService.getToken();
    
     this.headers=new HttpHeaders()
     .set('content-type', 'application/json')

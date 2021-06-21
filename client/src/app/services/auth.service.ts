@@ -15,11 +15,11 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<string>;
   private currentuserRoleSubject:BehaviorSubject<string>;
   private isLoggedInSubject:BehaviorSubject<boolean>;
-  private currentUserIdSubject:BehaviorSubject<string>;
+  private currentUserIdSubject:BehaviorSubject<number>;
   public currentUserRole:Observable<string>;
   public currentUser: Observable<string>;
   public isLoggedIn:Observable<boolean>;
-  public currentUserId:Observable<string>;
+  public currentUserId:Observable<number>;
 
   
   constructor(private http:HttpClient) {
@@ -34,11 +34,12 @@ export class AuthService {
     this.isLoggedInSubject=new BehaviorSubject<boolean>(false);
     this.isLoggedIn = this.isLoggedInSubject.asObservable();
 
-    
-    this.currentUserIdSubject=new BehaviorSubject<string>(localStorage.getItem('id')||'0');
+    const id=localStorage.getItem('id')||'0';
+    const tmpId=parseInt(id);
+    this.currentUserIdSubject=new BehaviorSubject<number>(tmpId);
     this.currentUserId = this.currentUserIdSubject.asObservable();
 
-
+    
 
    }
 
@@ -55,15 +56,16 @@ export class AuthService {
       token=token?.split(' ')[1];
       const returnToken=jwt.decodeToken(token);
       const {data}=returnToken;
-
+      
       localStorage.setItem('id', JSON.stringify(data.id));
       localStorage.setItem('username', JSON.stringify(data.username));
       localStorage.setItem('role', JSON.stringify(data.role));
 
+      this.currentUserIdSubject.next(parseInt(localStorage.getItem('id')||'0'));
       this.currentUserSubject.next(localStorage.getItem('username')||'');
       this.currentuserRoleSubject.next(localStorage.getItem('role')||'');
       this.isLoggedInSubject.next(true);
-      this.currentUserIdSubject.next(localStorage.getItem('id')||'0');
+      console.log(this.currentUserSubject.value);
             
 
     });
@@ -76,10 +78,17 @@ export class AuthService {
     localStorage.removeItem('username');
     localStorage.removeItem('role');
     localStorage.removeItem('id');
+
+    this.currentUserSubject.next('');
+    this.currentuserRoleSubject.next('');
+    this.isLoggedInSubject.next(false);
+    this.currentUserIdSubject.next(0);
   }
   getCurrentUser=()=>{
-    
+  console.log(localStorage.getItem('username'));
+  
    return JSON.parse(this.currentUserSubject.value);
+   //return this.currentUserSubject.value;
   }
 
   getCurrentUserRole=()=>{
@@ -88,28 +97,31 @@ export class AuthService {
   }
 
   getUserId=()=>{
-    return JSON.parse(this.currentUserIdSubject.value);
+    return this.currentUserIdSubject.value;
   }
 
  
   isLogIn=()=>{
-    const token=localStorage.getItem('token');
+    const token=this.getToken();
     const isExpired= new JwtHelperService().isTokenExpired(token||'');
-    if(isExpired) {
-      localStorage.removeItem(token||'');
-      localStorage.removeItem('username');
-      localStorage.removeItem('role');
-      localStorage.removeItem('id');
+    if(! isExpired) {return true;}
+    
+    localStorage.removeItem(token||'');
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
+    localStorage.removeItem('id');
 
-      this.currentUserSubject.next('');
-      this.currentuserRoleSubject.next('');
-      this.isLoggedInSubject.next(false);
-      this.currentUserIdSubject.next('');
-      return false;
-    }
-    return true;
+    this.currentUserSubject.next('');
+    this.currentuserRoleSubject.next('');
+    this.isLoggedInSubject.next(false);
+    this.currentUserIdSubject.next(0);
+    return false;
+    
+    
     
   }
-
+  getToken=()=>{
+    return localStorage.getItem('token');
+  }
 
 }

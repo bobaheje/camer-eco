@@ -28,8 +28,8 @@ export class ArticleService {
       this.router.navigate(['/login']);
 
     } 
-    const Token=localStorage.getItem('token');
-   
+    const Token=this.authService.getToken();
+    
     this.headers=new HttpHeaders()
     .set('content-type', 'application/json')
     .set('Access-Control-Allow-Origin', '*')
@@ -42,6 +42,11 @@ export class ArticleService {
   }
   getcategories=()=>{
     return this.categoryService.getCategories();
+  }
+  getArticlesByUser=(userId:number):Observable<Article[]>=>{
+    return this.http.get<Article[]>(`${this.baseUrl}/userarticle/${userId}`, {'headers':this.headers})
+            .pipe(catchError(this.errorHandler)
+              /*catchError(this.errorHandler)*/);
   }
   getArticles=():Observable<Article[]>=>{
     return this.http.get<Article[]>(this.baseUrl, {'headers':this.headers})
@@ -83,7 +88,7 @@ export class ArticleService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     // eslint-disable-next-line no-console
-    //console.log(errorMessage);
+    console.log(errorMessage);
     return throwError(errorMessage);
  }
 }

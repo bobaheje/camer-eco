@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -19,15 +19,14 @@ import { DeleteCategoryComponent } from './category/delete-category/delete-categ
 import { AddArticleComponent } from './article/add-article/add-article.component';
 import { CategoryService } from './services/category.service';
 import { ArticleService } from './services/article.service';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
-import 'froala-editor/js/froala_editor.pkgd.min.js';
 import { AuthService } from './services/auth.service';
 import {NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule} from '@angular-material-components/datetime-picker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatInputModule } from '@angular/material/input';
 import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import {MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 export const MY_FORMATS = {
   parse: {
@@ -68,8 +67,8 @@ export const MY_FORMATS = {
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    FroalaEditorModule.forRoot(), 
-    FroalaViewModule.forRoot()
+    EditorModule
+   
     
   ],
   providers: [
@@ -79,6 +78,7 @@ export const MY_FORMATS = {
     AuthService,
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' }
+    
   ],
   bootstrap: [AppComponent]
 })

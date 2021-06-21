@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User } from '../models/user';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,10 @@ import { User } from '../models/user';
 export class UserService {
   baseUrl='http://localhost:1500/api/v1/users';
   headers:HttpHeaders;
-  constructor(private http:HttpClient) { 
-    const Token=localStorage.getItem('token');
+  constructor(
+    private http:HttpClient,
+    private authService:AuthService) { 
+    const Token=this.authService.getToken();
    
     this.headers=new HttpHeaders()
     .set('content-type', 'application/json')

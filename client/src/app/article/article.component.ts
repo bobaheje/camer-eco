@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Article } from '../models/article';
 import { ArticleService } from '../services/article.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-article',
@@ -12,7 +13,7 @@ import { ArticleService } from '../services/article.service';
 export class ArticleComponent implements OnInit {
   articles:Article[]=[];
   article:Article|any;
-  constructor(private articleService:ArticleService) { }
+  constructor(private articleService:ArticleService, private authService:AuthService) { }
 
   findAll=()=>{
     return this.articleService.getArticles()
@@ -20,7 +21,14 @@ export class ArticleComponent implements OnInit {
                   this.articles=data;
                 });
   }
-
+  findAllByUser=(userId:number)=>{
+    return this.articleService.getArticlesByUser(userId)
+                .pipe()
+                .subscribe(data=>{
+                  this.articles=data;
+                  console.log(this.articles);
+                });
+  }
   create=(article:Article)=>{
     return this.articleService.createArticle(article)
                 .subscribe(data=>{
@@ -31,6 +39,7 @@ export class ArticleComponent implements OnInit {
     return this.articleService.getArticleById(id)
       .subscribe(data=>{
         this.article=data;
+        
       });
   }
 
@@ -41,7 +50,9 @@ export class ArticleComponent implements OnInit {
                 });
 
   }
- 
+  onSelectEdit=(art:Article)=>{
+    console.log(art);
+  }
   onDelete =(art:Article)=>{
     
     Swal.fire({
@@ -81,7 +92,11 @@ export class ArticleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.findAll();
+    //this.findAll();
+    const id=localStorage.getItem('id')||'0';
+    const userId= parseInt(id);
+   
+    this.findAllByUser(userId);
   }
   
 }

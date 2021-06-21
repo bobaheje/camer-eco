@@ -22,10 +22,12 @@ export class LoginComponent implements OnInit {
     
     if(this.authService.isLoggedIn)
     {
-      this.router.navigate(['/dashboard']);
+      console.log('true');
+
+      console.log(this.router.navigate(['/dashboard']));
     }
     else{
-      console.log('login');
+      //console.log('login');
       this.authService.logOut();
       this.router.navigate(['/login']);
     }

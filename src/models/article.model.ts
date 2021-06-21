@@ -64,19 +64,13 @@ export class Article extends BaseModel{
   })
   public publicationDate?:Date;
  
-  @ManyToOne(()=>User, (user)=>user.id, {
-    nullable:false
-  })
+  @ManyToOne(()=>User, (user)=>user.articles)
   public user?:User;
 
-  @ManyToOne(()=>Pays, (pays)=>pays.idpays, {
-    nullable:false
-  })
+  @ManyToOne(()=>Pays, (pays)=>pays.articles)
   public countries?:Pays;
 
-  @ManyToOne(()=>Category, (category)=>category.id, {
-    nullable:false
-  })
+  @ManyToOne(()=>Category, (category)=>category.articles)
   public categories?:Category;
   
 

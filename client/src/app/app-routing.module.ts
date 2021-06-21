@@ -12,6 +12,7 @@ import { UserAddEditComponent } from './user/user-add-edit/user-add-edit.compone
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { AuthGardService } from './services/auth-gard.service';
 import { DeleteCategoryComponent } from './category/delete-category/delete-category.component';
+import { AddArticleComponent } from './article/add-article/add-article.component';
 
 const routes:Routes=[
   {
@@ -27,7 +28,15 @@ const routes:Routes=[
       {
         path:'article',
         component:ArticleComponent,
-        canActivate:[AuthGardService]
+        canActivate:[AuthGardService],
+        children:
+        [
+          {
+            path:'addarticle',
+            component:AddArticleComponent,
+            canActivate:[AuthGardService]
+          }
+        ]
       },
       {
         path:'category',
